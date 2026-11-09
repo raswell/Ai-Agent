@@ -6,7 +6,7 @@ on:
     branches: [ main, homeos-tv ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -43,3 +43,15 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish APK to apk-output branch
+        run: |
+          mkdir -p /tmp/apkout && cp app/build/outputs/apk/debug/*.apk /tmp/apkout/HomeOS-TV-debug.apk
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan apk-output
+          git rm -rf . > /dev/null 2>&1 || true
+          cp /tmp/apkout/HomeOS-TV-debug.apk .
+          git add HomeOS-TV-debug.apk
+          git commit -m "Built APK"
+          git push -f origin apk-output
