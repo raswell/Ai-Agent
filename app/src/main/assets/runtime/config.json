@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "brand": "HOMEOS",
+  "theme": {
+    "bg": "#090d16",
+    "panel": "#121b2b",
+    "panel2": "#18243a",
+    "text": "#f4f7fc",
+    "muted": "#94a3b8",
+    "accent": "#65d6ad",
+    "accent2": "#78a9ff",
+    "radius": "22px"
+  },
+  "modules": [
+    {
+      "id": "devices",
+      "title": "Device Control",
+      "description": "Manage connected HomeOS devices",
+      "icon": "⌂",
+      "route": "modules/devices/index.html",
+      "sections": [
+        {
+          "title": "Device Control · Runtime module",
+          "text": "This module is a live HomeOS runtime surface. Hermes can add sections, data views and controls through future signed runtime releases.",
+          "items": [
+            {
+              "label": "Module state",
+              "value": "Ready for expansion"
+            },
+            {
+              "label": "Update mode",
+              "value": "No APK rebuild"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "automation",
+      "title": "Automation",
+      "description": "Scenes, rules and scheduled actions",
+      "icon": "⌘",
+      "route": "modules/automation/index.html",
+      "sections": [
+        {
+          "title": "Automation · Runtime module",
+          "text": "This module is a live HomeOS runtime surface. Hermes can add sections, data views and controls through future signed runtime releases.",
+          "items": [
+            {
+              "label": "Module state",
+              "value": "Ready for expansion"
+            },
+            {
+              "label": "Update mode",
+              "value": "No APK rebuild"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "title": "Network",
+      "description": "Monitor your local network",
+      "icon": "⌁",
+      "route": "modules/network/index.html",
+      "sections": [
+        {
+          "title": "Network · Runtime module",
+          "text": "This module is a live HomeOS runtime surface. Hermes can add sections, data views and controls through future signed runtime releases.",
+          "items": [
+            {
+              "label": "Module state",
+              "value": "Ready for expansion"
+            },
+            {
+              "label": "Update mode",
+              "value": "No APK rebuild"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "title": "Media Center",
+      "description": "A future home for media controls",
+      "icon": "♫",
+      "route": "modules/media/index.html",
+      "sections": [
+        {
+          "title": "Media Center · Runtime module",
+          "text": "This module is a live HomeOS runtime surface. Hermes can add sections, data views and controls through future signed runtime releases.",
+          "items": [
+            {
+              "label": "Module state",
+              "value": "Ready for expansion"
+            },
+            {
+              "label": "Update mode",
+              "value": "No APK rebuild"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
