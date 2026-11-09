@@ -3,7 +3,7 @@ name: Build HomeOS TV APK
 on:
   workflow_dispatch:
   push:
-    branches: [ main, homeos-tv ]
+    branches: [ main, homeos-tv-v02 ]
 
 permissions:
   contents: write
@@ -15,43 +15,40 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
-
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
         with:
           gradle-version: '8.9'
-
-      - name: Build debug APK
-        run: gradle --no-daemon assembleDebug
-
+      - name: Build and verify APK
+        run: |
+          gradle --no-daemon clean assembleDebug
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          sha256sum app/build/outputs/apk/debug/app-debug.apk
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: HomeOS-TV-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: HomeOS-TV-Launcher-v0.2.0-Android9
+          path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-          retention-days: 14
-
-      - name: Publish APK to apk-output branch
+          retention-days: 30
+      - name: Publish APK to apk-output-v0.2.0 branch
+        if: github.ref == 'refs/heads/homeos-tv-v02'
         run: |
-          mkdir -p /tmp/apkout && cp app/build/outputs/apk/debug/*.apk /tmp/apkout/HomeOS-TV-debug.apk
+          mkdir -p /tmp/apkout && cp app/build/outputs/apk/debug/app-debug.apk /tmp/apkout/HomeOS-TV-v0.2.0-debug.apk
           git config user.name "github-actions"
           git config user.email "actions@users.noreply.github.com"
-          git checkout --orphan apk-output
+          git checkout --orphan apk-output-v0.2.0
           git rm -rf . > /dev/null 2>&1 || true
-          cp /tmp/apkout/HomeOS-TV-debug.apk .
-          git add HomeOS-TV-debug.apk
-          git commit -m "Built APK"
-          git push -f origin apk-output
+          cp /tmp/apkout/HomeOS-TV-v0.2.0-debug.apk .
+          git add HomeOS-TV-v0.2.0-debug.apk
+          git commit -m "Built APK v0.2.0"
+          git push -f origin apk-output-v0.2.0

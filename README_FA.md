@@ -1,53 +1,34 @@
-# HomeOS TV Launcher — نسخه پایه 0.1.0
+# HomeOS TV Launcher 0.2.0
 
-## وضعیت این تحویل
-این بسته شامل سورس کامل یک اپلیکیشن Android TV است. در محیط ساخت فعلی Android SDK، Android Build Tools و Gradle نصب نیستند و دسترسی شبکه برای دریافت آن‌ها نیز برقرار نشد؛ بنابراین APK کامپایل‌شده در این محیط تولید نشده است. این بسته را به‌عنوان سورس آماده ساخت در Android Studio تحویل می‌دهم، نه APK آزمایش‌شده.
+لانچر سبک Android TV با رابط فارسی و کنترل D-pad.
 
-## قابلیت‌های فعلی
-- رابط تلویزیونی تاریک و قابل کنترل با D-pad
-- ساعت و تاریخ
-- کارت‌های اولیه HomeOS
-- ذخیره آدرس سرور در تنظیمات محلی
-- آزمایش اتصال با `GET /health`
-- بررسی دوره‌ای سلامت سرور هر ۱۵ ثانیه
-- اجرای مستقل در نبود سرور
-- ثبت Intent لانچر Android TV و Intent نوع HOME
+## سازگاری
+- حداقل Android 6 / API 23؛ هدف Android 9 / API 28.
+- روی Android 9 (API 28) و نسخه‌های بالاتر اجرا می‌شود.
+- بدون کتابخانه JNI/NDK؛ بنابراین APK به ABI خاص MediaTek/ARM32/ARM64 وابسته نیست.
+- Java 11 source compatibility، Android Gradle Plugin 8.7.3، Gradle 8.9، JDK 17.
 
-## محدودیت اتصال فعلی
-مسیر `/health` فقط یک مسیر آزمایشی و قراردادی است؛ هنوز ادعا نمی‌شود که با Gateway فعلی Hermes Raspberry سازگار است. برای اتصال واقعی باید API و پورت واقعی Gateway بررسی و سپس قرارداد پیام‌ها پیاده‌سازی شود. این نسخه هنوز WebSocket و دریافت زنده پیکربندی را پیاده‌سازی نکرده است.
+## اتصال پیش‌فرض فعلی
+- Host: `192.168.254.54`
+- Port: `8081`
+- Path: `/health`
+- URL: `http://192.168.254.54:8081/health`
 
-## ساخت APK
-1. Android Studio را روی رایانه نصب کن.
-2. از مسیر **File > Open** پوشه `HomeOS-TV-Launcher` را باز کن.
-3. در صورت درخواست، Android SDK Platform 35 و Android Build Tools سازگار را نصب کن.
-4. اجازه بده Gradle Plugin نسخه 8.7.3 دریافت شود.
-5. از منوی **Build > Build Bundle(s) / APK(s) > Build APK(s)** خروجی بگیر.
-6. APK در مسیر زیر ساخته می‌شود:
-   `app/build/outputs/apk/debug/app-debug.apk`
+در تنظیمات، IP/Host، Port و Path جداگانه وارد می‌شوند. برنامه URL را می‌سازد، درخواست GET را خارج از Main Thread اجرا می‌کند، HTTP status و JSON را می‌خواند و فقط در صورت `status: ok` وضعیت «متصل و تأییدشده» نشان می‌دهد. هر ۱۵ ثانیه Health check تکرار می‌شود.
 
-نیازمندی‌ها:
-- JDK 17 یا بالاتر
-- Android SDK Platform 35
-- Android Gradle Plugin 8.7.3
-- Gradle سازگار (معمولاً Gradle 8.9)
+## امنیت
+این نسخه برای شبکه محلی فعلی از HTTP استفاده می‌کند؛ Android cleartext برای این APK فعال است. HTTP رمزنگاری یا احراز هویت فراهم نمی‌کند؛ برای دسترسی اینترنتی/خارج از LAN باید HTTPS و احراز هویت اضافه شود. هیچ کلید یا رمز عبوری در APK ذخیره نشده است.
 
-## نصب
-APK را به تلویزیون منتقل و نصب کن. اگر نصب از منبع ناشناس مسدود است، اجازه نصب برای برنامه فایل‌منیجر را فعال کن. برای انتخاب به‌عنوان لانچر پیش‌فرض، رفتار Android TV سازنده تعیین‌کننده است؛ حضور Intent مربوط به HOME به‌تنهایی تضمین نمی‌کند سیستم اجازه جایگزینی لانچر کارخانه را بدهد.
+## Build
+با JDK 17 و Android SDK Platform 35:
 
-## تنظیم سرور
-در برنامه گزینه «تنظیم اتصال» را انتخاب و آدرس پایه سرور را وارد کن، مثلاً:
-`http://192.168.1.50:PORT`
+```bash
+gradle --no-daemon assembleDebug
+```
 
-پورت را تا زمان ممیزی Gateway حدس نزن. برای استفاده واقعی، بهتر است اتصال TLS و Pairing امن پیاده‌سازی شود. این نسخه برای شبکه داخلی آزمایشی است؛ پورت HTTP را روی اینترنت عمومی در معرض دسترسی قرار نده.
+خروجی: `app/build/outputs/apk/debug/app-debug.apk`
 
-## گام بعدی
-پس از نصب و اعلام مدل Android TV، باید Gateway واقعی Hermes Raspberry ممیزی شود و سپس WebSocket، Pairing، Widget Registry، پیکربندی زنده و Rollback به همین پروژه افزوده شوند.
+GitHub Actions با اجرای دستی یا push به main همین APK را تولید و به‌صورت artifact نگهداری می‌کند.
 
-
-## ساخت خودکار بدون Android Studio با GitHub Actions
-این پروژه فایل `.github/workflows/build-apk.yml` دارد. پس از قرار دادن سورس در یک مخزن GitHub:
-1. وارد تب Actions مخزن شو.
-2. Workflow با نام `Build HomeOS TV APK` را انتخاب کن.
-3. روی Run workflow بزن.
-4. پس از موفقیت، در صفحه اجرای Workflow بخش Artifacts، فایل `HomeOS-TV-debug-apk` را دانلود کن.
-این Workflow روی Runner ابری GitHub، JDK 17، Android SDK و Gradle را آماده کرده و APK آزمایشی را به‌عنوان Artifact بارگذاری می‌کند.
+## نصب روی نسخه قبلی
+Package ID حفظ شده (`com.homeos.tv`) و versionCode افزایش یافته است؛ در صورت یکسان بودن signing key می‌توان نسخه جدید را روی قبلی نصب کرد. اگر امضای نسخه قبلی متفاوت باشد، Android نصب روی نسخه قبلی را رد می‌کند؛ در آن حالت ابتدا باید از تنظیمات نسخه قبلی نسخه پشتیبان گرفت و سپس uninstall/install انجام داد.
