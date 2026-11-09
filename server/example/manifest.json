@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.1",
+  "versionCode": 101,
+  "minShellVersion": 1,
+  "bundleUrl": "/launcher/v1/bundle.zip",
+  "sha256": "REPLACE_WITH_64_CHARACTER_SHA256_OF_BUNDLE_ZIP"
+}

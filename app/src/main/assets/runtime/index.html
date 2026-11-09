@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="color-scheme" content="dark"><title>HomeOS TV</title>
+  <link rel="stylesheet" href="/runtime/css/home.css">
+</head>
+<body>
+  <div class="ambient"></div>
+  <header class="topbar"><div class="brand"><span class="brand-mark">H</span><div><b id="brandName">HOMEOS</b><small>TV CONTROL CENTER</small></div></div><div class="top-meta"><span id="connection" class="status offline">● Offline</span><time id="clock">--:--</time></div></header>
+  <main id="app" aria-live="polite"><section class="hero"><div><p class="eyebrow">YOUR HOME, CONNECTED</p><h1>One place.<br><span>Everything in control.</span></h1><p class="sub">A modular HomeOS interface, ready to grow with Hermes.</p><button id="refresh" class="primary focusable">Check for updates</button></div><div class="hero-orbit"><div class="orbit-ring"></div><div class="orbit-core">H</div><span class="orbit-dot d1"></span><span class="orbit-dot d2"></span><span class="orbit-dot d3"></span></div></section>
+  <section class="section"><div class="section-head"><div><p class="eyebrow">QUICK ACCESS</p><h2>Control modules</h2></div><span class="muted" id="runtimeVersion">Runtime bundled</span></div><div id="modules" class="module-grid"></div></section>
+  <section class="section apps-section"><div class="section-head"><div><p class="eyebrow">ON THIS TV</p><h2>Applications</h2></div><span class="muted">Use the remote to navigate</span></div><div id="apps" class="app-grid"><div class="empty">Loading applications…</div></div></section>
+  <footer><span>HOMEOS · MODULAR TV RUNTIME</span><span id="serverLabel">Raspberry Pi · checking…</span></footer></main>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/runtime/js/home.js"></script>
+</body></html>
