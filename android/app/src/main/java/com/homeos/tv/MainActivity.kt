@@ -81,7 +81,7 @@ class MainActivity : Activity() {
         root.addView(sectionTitle("TV APPLICATIONS"))
         val appScroll = HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false; descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS }
         appGrid = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; isFocusable = true }
-        appScroll.addView(appGrid, HorizontalScrollView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        appScroll.addView(appGrid, ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT))
         root.addView(appScroll, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 150))
         root.addView(sectionTitle("HOMEOS PAGES"))
         val pageBar = HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false }
@@ -95,11 +95,11 @@ class MainActivity : Activity() {
             setBackgroundColor(Color.TRANSPARENT)
             isFocusable = true
             isFocusableInTouchMode = true
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = false
-            settings.allowFileAccess = false
-            settings.allowContentAccess = false
-            settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
+            this.settings.javaScriptEnabled = true
+            this.settings.domStorageEnabled = false
+            this.settings.allowFileAccess = false
+            this.settings.allowContentAccess = false
+            this.settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
             webViewClient = object : WebViewClient() {
                 override fun shouldInterceptRequest(view: WebView?, request: android.webkit.WebResourceRequest?) =
                     assetLoader.shouldInterceptRequest(request?.url ?: Uri.EMPTY)
